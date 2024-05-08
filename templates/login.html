@@ -1,33 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Login</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                background-color: #f8f8f8;
+            }
+        
+            .container {
+                max-width: 350px;
+                background: #fde2e2; /* Pale red background */
+                margin: 50px auto;
+                box-shadow: 0 15px 16.83px .17px rgba(0,0,0,.05);
+                border-radius: 20px;
+                padding: 30px;
+            }
+        
+            h2 {
+                font-size: 36px;
+                font-weight: 700;
+                color: #222;
+                margin-bottom: 30px;
+            }
+        
+            .form-group {
+                margin-bottom: 25px;
+            }
+        
+            label {
+                font-weight: 500;
+                color: #222;
+            }
+        
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #999;
+            }
+        
+            .btn-primary {
+                background-color: #ff9191; /* Pale red button */
+                border-color: #ff9191;
+            }
+        
+            .btn-primary:hover {
+                background-color: #ff6f6f; /* Darker shade on hover */
+                border-color: #ff6f6f;
+            }
+        
+            .bottom {
+                margin-top: 20px;
+            }
+        </style>
+        </head>
+
 
 <body>
-    <h1>Please Login</h1>
-    <form action="/login" method="POST">
-        <table>
-            <tr>
-                <td>
-                    <label for="username">Username</label>
-                </td>
-                <td>
-                    <input type="text" id="username" name="username" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="password">Password</label>
-                </td>
-                <td>
-                    <input type="password" id="password" name="password" />
-                </td>
-            </tr>
-        </table>
-        <button type="submit">Login</button>
-        <br>
-        <a href="/">Cancel</a>
-        
-    </form>
-    <a href="/templates/register.html">Not registered? Sign up now!</a>
+    <div class = "container">
+        <h1>Please Login</h1>
+        <form action="/login" method="POST">
+            <table>
+                <tr>
+                    <td>
+                        <label for="username">Username</label>
+                    </td>
+                    <td>
+                        <input type="text" id="username" name="username" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="password">Password</label>
+                    </td>
+                    <td>
+                        <input type="password" id="password" name="password" />
+                    </td>
+                </tr>
+            </table>
+            <button type="submit">Login</button>
+            <br>
+            <a href="/">Cancel</a>
+        </form>
+        <a href="/templates/register.html">Not registered? Sign up now!</a>
+    </div>
 </body>
 
 </html>

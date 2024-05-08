@@ -4,21 +4,110 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>User Account</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">              
+<style>
+	.header {
+  padding: 60px; /* some padding */
+  text-align: center; /* center the text */
+  background: #e04d45; /* red background */
+  color: white; /* white text color */
+}
+
+/* Increase the font size of the <h1> element */
+.header h1 {
+  font-size: 40px;
+}
+
+/* navigation bar */
+.navbar {
+  overflow: hidden; /* Hide overflow */
+  background-color: #333; /* Dark background color */
+}
+
+/* Style the navigation bar links */
+.navbar a {
+  float: left; /* Make sure that the links stay side-by-side */
+  display: block; /* Change the display to block, for responsive reasons (see below) */
+  color: white; /* White text color */
+  text-align: center; /* Center the text */
+  padding: 2px 80px; /* Add some padding */
+  text-decoration: none; /* Remove underline */
+}
+
+/* Change color on hover/mouse-over */
+.navbar a:hover {
+  background-color: #ddd; /* Grey background color */
+  color: black; /* Black text color */
+}
+
+/* Ensure proper sizing */
+* {
+  box-sizing: border-box;
+}
+
+
+/* Column container */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 15;
+}
+
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+  flex: 30%; /* Set the width of the sidebar */ 
+  background-color: #f1f1f1; /* Grey background color */
+  padding: 20px; /* Some padding */
+}
+
+.row h1 {
+	font-size: 15px;
+}
+
+/* Main column */
+.main {
+  flex: 70%; /* Set the width of the main content */
+  background-color: white; /* White background color */
+  padding: 20px; /* Some padding */
+}
+
+</style>
 </head>
 <body>
-<div class="container">
-	<div class="row">	
-		<h1>User Profile</h1>
+	<div class="header">
+		<h1>keenConnect</h1>
+		<p>Room Sharing Made Easy</p>
 	</div>
-	<br>
-	<div class="row">	
-		Logged in : <strong>{{session.name}} | <a href="{{ url_for('logout') }}"> Logout</a>
+
+	<div class="navbar">
+		<a href="#">Schedual</a>
+		<a href="#">Attendance</a>
 	</div>
-	<br><br>
+	<div class="container">
+			<div class="row">	
+				Logged in as: <strong>{{session.name}} | <a href="{{ url_for('logout') }}"> Logout</a>
+			</div>
+			<br>
+			<div class="row">
+				<h2>Welcome to the user profile page...</h2> 
+			</div>		
+		</div>
 	<div class="row">
-	    
-		<h2>Welcome to the user profile page...</h2> 
-	</div>		
-</div>
+		<div class="side">
+			<img scr="Decorations/BlackProfilePic.png" alt = "profile picture"/>
+			<br>
+			<h1> {{session.name}} </h1>
+
+		</div>
+		<div class="main">
+			<br>
+			<h2> Upcoming Meetings</h2>
+			<div class="container">
+				
+			</div>
+		</div>
+	  </div>
+
+	
 </body>
 </html>
