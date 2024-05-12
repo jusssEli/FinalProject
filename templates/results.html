@@ -1,0 +1,26 @@
+<!doctype html>
+	<head>
+		<meta charset="utf-8">
+		<title>Employees</title>
+	</head>
+	<body>
+		<p><nav >
+			<a href="" class="nav-item nav-link active">Home</a>
+			<a href="listing" class="nav-item nav-link">View Faculty</a> <!--insert app routes-->
+			<a href="form" class="nav-item nav-link">Search Employee</a>
+			<a href="" class="nav-item nav-link">Add Meeting</a>
+			<a href="meetings" class="nav-item nav-link" tabindex="-1">Remove Meetings</a>
+        <br>
+        <br>
+		<table border="1" cellpadding="5" cellspacing="5">
+		<tr><th>ID</th><th>Name</th><th>Phone</th><th>Email</th></tr>	
+		{% for row in data %}
+		<tr>
+			{% for d in row %}
+			<td>{{d}}</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+		</table>
+	</body>
+</html>
