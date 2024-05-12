@@ -84,3 +84,17 @@ def book_room(room_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+@app.route('/listing')
+def listing():
+    cursor = mysql.connection.cursor()
+    # Execute a query to fetch data
+    cursor.execute("SELECT * FROM employee")
+    # Fetch all rows from the result set
+    mysql.connection.commit()
+    data = cursor.fetchall()
+    cursor.close()
+    print(data)
+    #return f"Done!! Query Result is {data}"
+    return render_template('listing.html', data=data)
