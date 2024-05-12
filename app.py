@@ -1,23 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL
-from flask_session import Session
-from models import db, User
-import re
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from models import db, User, Room, Booking
+from datetime import datetime
 
 app = Flask(__name__)
 
-app.config['SESSION_TYPE'] = 'sqlalchemy'
+app.config['SECRET_KEY'] = 'WXYZ9876'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/keenconnect'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'WXYZ9876'
-app.config['SESSION_SQLALCHEMY'] = db
 
 db.init_app(app)
-Session(app)
+migrate = Migrate(app, db)
 
 @app.route("/")
 def index():
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('login'))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -25,7 +23,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
-        if user and user.password == password:  # Check the hashed password here instead
+        if user and user.password == password:
             session['loggedin'] = True
             session['userid'] = user.user_id
             session['username'] = user.username
@@ -33,44 +31,56 @@ def login():
             return redirect(url_for('dashboard'))
         else:
             return render_template("login.html", error="Invalid credentials")
-    else:
-        return render_template("login.html", error=None)
-    
+    return render_template("login.html")
+
 @app.route('/dashboard')
 def dashboard():
     if 'loggedin' in session:
-        # If user is logged in, display dashboard
-        return render_template("dashboard.html")
-    else:
-        # If not logged in, redirect to login page
-        return redirect(url_for("login"))
+        return render_template("dashboard.html", username=session['username'])
+    return redirect(url_for("login"))
 
 @app.route('/logout')
 def logout():
-    session.pop('loggedin', None)
-    session.pop('userid', None)
-    session.pop('email', None)
+    session.clear()
     return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']  # Hash this password
+        password = request.form['password']
         email = request.form['email']
-        user_exists = User.query.filter_by(email=email).first()
-        if user_exists:
+        if User.query.filter_by(email=email).first():
             return render_template('register.html', message='Account already exists!')
-        else:
-            new_user = User(username=username, email=email, password=password)  # Hash the password before saving
-            db.session.add(new_user)
-            db.session.commit()
-            session['loggedin'] = True
-            session['username'] = username
-            session['email'] = email
-            return redirect(url_for('dashboard'))
-    else:
-        return render_template('register.html')
+        new_user = User(username=username, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
+@app.route('/book_room/<int:room_id>', methods=['GET', 'POST'])
+def book_room(room_id):
+    room = Room.query.get(room_id)
+    if request.method == 'POST':
+        if 'loggedin' not in session:
+            return redirect(url_for('login'))
+        date_of_booking = request.form['booking_date']
+        time_of_arrival = datetime.strptime(request.form['time_of_arrival'], '%Y-%m-%d %H:%M')
+        time_of_departure = datetime.strptime(request.form['time_of_departure'], '%Y-%m-%d %H:%M')
+        
+        new_booking = Booking(
+            date_of_booking=date_of_booking,
+            time_of_arrival=time_of_arrival,
+            time_of_departure=time_of_departure,
+            room_id=room_id,
+            user_id=session['userid']
+        )
+        db.session.add(new_booking)
+        db.session.commit()
+        return redirect(url_for('dashboard'))
+    if room:
+        return render_template('book_room.html', room=room)
+    return 'Room not found!', 404
 
 if __name__ == "__main__":
     app.run(debug=True)

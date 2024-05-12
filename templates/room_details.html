@@ -1,0 +1,36 @@
+<div>
+    <h1>{{ room.room_name }}</h1>
+    <table>
+        <tr>
+            <td>Max Occupancy:</td>
+            <td>{{ room.max_occupancy }} People</td>
+        </tr>
+        <tr>
+            <td>Room Width:</td>
+            <td>{{ room.width }}</td>
+        </tr>
+        <tr>
+            <td>Price per hour:</td>
+            <td>{{ room.price }}</td>
+        </tr>
+    </table>
+
+    <h2>Description</h2>
+    <p>{{ room.description }}</p>
+
+    <h2>Booking Form</h2>
+    <h2>Booking Form</h2>
+    <form action="{{ url_for('room.book_room', room_id=room.room_id) }}" method="POST">
+        <label for="booking_date">Booking Date:</label>
+        <input type="date" id="booking_date" name="booking_date" required><br>
+
+        <label for="time_of_arrival">Time of Arrival:</label>
+        <input type="time" id="time_of_arrival" name="time_of_arrival" required><br>
+
+        <label for="time_of_departure">Time of Departure:</label>
+        <input type="time" id="time_of_departure" name="time_of_departure" required><br>
+
+        <button type="submit" name="book">BOOK NOW</button>
+    </form>
+    </form>
+</div>

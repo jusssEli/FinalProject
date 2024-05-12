@@ -101,9 +101,15 @@
 		</div>
 		<div class="main">
 			<br>
-			<h2> Upcoming Meetings</h2>
+			<h2>Upcoming Meetings</h2>
 			<div class="container">
-				
+				{% for booking in bookings %}
+				<div>
+					<p>Room: {{ booking.room.name }} | Date: {{ booking.date_of_booking }} | From: {{ booking.time_of_arrival.strftime('%H:%M') }} To: {{ booking.time_of_departure.strftime('%H:%M') }}</p>
+				</div>
+				{% else %}
+				<p>No bookings found.</p>
+				{% endfor %}
 			</div>
 		</div>
 	  </div>
