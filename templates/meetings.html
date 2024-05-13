@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meetings</title>
+</head>
+<body>
+    <h1>Meetings</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Meeting ID</th>
+                <th>Room ID</th>
+                <th>Host</th>
+                <th>Month</th>
+                <th>Day</th>
+                <th>Year</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for meeting in meetings %}
+            <tr>
+                <td>{{ meeting[0] }}</td>
+                <td>{{ meeting[1] }}</td>
+                <td>{{ meeting[2] }}</td>
+                <td>{{ meeting[3] }}</td>
+                <td>{{ meeting[4] }}</td>
+                <td>{{ meeting[5] }}</td>
+                <td>{{ meeting[6] }}:{{ meeting[7] }}</td>
+                <td>{{ meeting[8] }}:{{ meeting[9] }}</td>
+                <td>
+                    <form action="/remove_meeting/{{ meeting[0] }}" method="post">
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
