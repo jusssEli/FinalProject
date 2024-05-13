@@ -98,6 +98,8 @@ def listing():
     print(data)
     #return f"Done!! Query Result is {data}"
     return render_template('listing.html', data=data)
+
+@app.route('/form')
 def form():
     return render_template('form.html')
  
